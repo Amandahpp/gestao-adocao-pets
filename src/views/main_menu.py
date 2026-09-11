@@ -20,7 +20,7 @@ class MainView(ttk.Frame):
 
     def _criar_botoes(self) -> None:
         menu_items = [
-            ("Cadastrar Cachorro", getattr(self.controller, "abrir_cad_cachorro", None)),
+            ("Cadastrar ", getattr(self.controller, "abrir_cad_cachorro", None)),
             ("Cadastrar Gato", getattr(self.controller, "abrir_cad_gato", None)),
             ("Listar Animais", getattr(self.controller, "abrir_listagem_animais", None)),
             ("Cadastrar Adotante", getattr(self.controller, "abrir_cad_adotante", None)),
@@ -39,5 +39,4 @@ if __name__ == "__main__":
     
     app = MainView(root, controller=None)
     
-    # Mantém a janela aberta
     root.mainloop()
