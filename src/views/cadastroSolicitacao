@@ -1,0 +1,24 @@
+import tkinter as tk
+from tkinter import ttk
+
+class CadastroSolicitacaoView(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.title("Nova Solicitação")
+        self.geometry("280x200")
+
+        ttk.Label(self, text="Animal:").pack(pady=(10, 2))
+        self.combo_animal = ttk.Combobox(self, values=["Rex (Cachorro)", "Mingau (Gato)"], state="readonly")
+        self.combo_animal.pack()
+
+        ttk.Label(self, text="Adotante:").pack(pady=(5, 2))
+        self.combo_adotante = ttk.Combobox(self, values=["Ana Silva", "Carlos Souza"], state="readonly")
+        self.combo_adotante.pack()
+
+        ttk.Button(self, text="Enviar", command=self.destroy).pack(pady=15)
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    root.withdraw()
+    app = CadastroSolicitacaoView(root)  
+    root.mainloop()
