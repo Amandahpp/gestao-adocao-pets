@@ -5,7 +5,7 @@ class CadastroGatoView(tk.Toplevel):
     def __init__(self, parent, controller=None):
         super().__init__(parent)
         self.controller = controller
-        
+
         self.title("Cadastrar Gato")
         self.geometry("300x240")
         self.resizable(False, False)
@@ -35,13 +35,17 @@ class CadastroGatoView(tk.Toplevel):
 
         frame.columnconfigure(1, weight=1)
 
-        ttk.Button(frame, text="Salvar", command=self.destroy).grid(row=4, column=0, columnspan=2, pady=(15, 0))
+        ttk.Button(frame, text="Salvar", command=self._salvar).grid(row=4, column=0, columnspan=2, pady=(15, 0))
 
+    def _salvar(self):
+        nome = self.ent_nome.get().strip()
+        idade = self.ent_idade.get().strip()
+        sexo = self.combo_sexo.get()
+        pelagem = self.ent_pelagem.get().strip()
 
-if __name__ == "__main__":
-    root = tk.Tk()
-    root.withdraw()
-    
-    app = CadastroGatoView(root)
-    
-    root.mainloop()
+        if self.controller is not None:
+            ok = self.controller.cadastrar_gato(nome, idade, sexo, pelagem)
+            if ok:
+                self.destroy()
+        else:
+            self.destroy()

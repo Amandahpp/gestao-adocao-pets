@@ -1,4 +1,4 @@
-from estado_solicitacao import EstadoSolicitacao
+from src.models.estado_solicitacao import EstadoSolicitacao
 
 class EstadoAprovada(EstadoSolicitacao):
 

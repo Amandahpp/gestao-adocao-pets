@@ -11,23 +11,23 @@ class Animal(ABC):
     @property
     def id(self):
         return self.__id
-    
+
     @property
     def nome(self):
         return self.__nome
-    
+
     @property
     def idade(self):
         return self.__idade
-    
+
     @property
     def sexo(self):
         return self.__sexo
-    
+
     @property
     def status(self):
         return self.__status
-    
+
     @status.setter
     def status(self, novo_status):
         self.__status = novo_status

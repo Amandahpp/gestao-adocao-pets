@@ -7,7 +7,7 @@ class Adotante:
     @property
     def nome(self):
         return self.__nome
-    
+
     def exibir_dados(self):
         return (
             f"Nome: {self.__nome} | "
