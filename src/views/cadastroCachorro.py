@@ -2,8 +2,9 @@ import tkinter as tk
 from tkinter import ttk
 
 class CadastroCachorroView(tk.Toplevel):
-    def __init__(self, parent):
+    def __init__(self, parent, controller=None):
         super().__init__(parent)
+        self.controller = controller
         self.title("Cadastrar Cachorro")
         self.geometry("280x220")
 
@@ -24,11 +25,17 @@ class CadastroCachorroView(tk.Toplevel):
         self.ent_raca = ttk.Entry(self)
         self.ent_raca.pack()
 
-        ttk.Button(self, text="Salvar", command=self.destroy).pack(pady=15)
+        ttk.Button(self, text="Salvar", command=self._salvar).pack(pady=15)
 
+    def _salvar(self):
+        nome = self.ent_nome.get().strip()
+        idade = self.ent_idade.get().strip()
+        sexo = self.combo_sexo.get()
+        raca = self.ent_raca.get().strip()
 
-if __name__ == "__main__":
-    root = tk.Tk()
-    root.withdraw()
-    app = CadastroCachorroView(root)
-    root.mainloop()
+        if self.controller is not None:
+            ok = self.controller.cadastrar_cachorro(nome, idade, sexo, raca)
+            if ok:
+                self.destroy()
+        else:
+            self.destroy()

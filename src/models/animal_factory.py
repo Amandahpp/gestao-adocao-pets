@@ -1,5 +1,5 @@
-from cachorro import Cachorro
-from gato import Gato
+from src.models.cachorro import Cachorro
+from src.models.gato import Gato
 
 class AnimalFactory:
 

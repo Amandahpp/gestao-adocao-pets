@@ -1,4 +1,4 @@
-from estados import EstadoPendente
+from src.models.estados import EstadoPendente
 
 class SolicitacaoAdocao:
 
