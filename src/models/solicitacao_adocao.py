@@ -1,30 +1,23 @@
 from src.models.estados import EstadoPendente
 
 class SolicitacaoAdocao:
-
     def __init__(self, animal, adotante):
-        self.__animal = animal
-        self.__adotante = adotante
-        self.__estado = EstadoPendente()
+        self._animal = animal
+        self._adotante = adotante
+        self._estado = EstadoPendente()
 
     @property
-    def estado(self):
-        return self.__estado
-
+    def animal(self): return self._animal
+    @property
+    def adotante(self): return self._adotante
+    @property
+    def estado(self): return self._estado
     @estado.setter
-    def estado(self, novo_estado):
-        self.__estado = novo_estado
+    def estado(self, valor): self._estado = valor
+    @property
+    def status(self): return self._estado.nome
 
-    def aprovar(self):
-        self.__estado.aprovar(self)
-        self.__animal.status = "Adotado"
-
-    def rejeitar(self):
-        self.__estado.rejeitar(self)
-
+    def aprovar(self): self._estado.aprovar(self)
+    def rejeitar(self): self._estado.rejeitar(self)
     def exibir(self):
-        return (
-            f"{self.__animal.nome} -> "
-            f"{self.__adotante.nome} | "
-            f"{type(self.__estado).__name__}"
-        )
+        return f"{self.animal.nome} -> {self.adotante.nome} | {self.status}"
