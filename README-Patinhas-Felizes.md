@@ -6,23 +6,6 @@ O projeto demonstra conceitos de Programação Orientada a Objetos (POO), organi
 
 > **Importante:** esta versão mantém os dados apenas em memória. Ao fechar o programa, os cadastros e solicitações são perdidos. O sistema não utiliza banco de dados.
 
-## 📑 Sumário
-
-- [Objetivos](#-objetivos)
-- [Funcionalidades](#-funcionalidades)
-- [Tecnologias e conceitos](#-tecnologias-e-conceitos)
-- [Requisitos](#-requisitos)
-- [Como obter e executar](#-como-obter-e-executar)
-- [Como utilizar](#-como-utilizar)
-- [Regras de negócio](#-regras-de-negócio)
-- [Arquitetura do projeto](#-arquitetura-do-projeto)
-- [Padrões de projeto](#-padrões-de-projeto)
-- [Testes automatizados](#-testes-automatizados)
-- [Diagramas e documentação complementar](#-diagramas-e-documentação-complementar)
-- [Limitações conhecidas](#-limitações-conhecidas)
-- [Possíveis melhorias futuras](#-possíveis-melhorias-futuras)
-- [Idioma](#-idioma)
-
 ## 🎯 Objetivos
 
 - Organizar o cadastro de cães e gatos disponíveis para adoção.
@@ -71,89 +54,7 @@ A tela inicial apresenta cartões de acesso às principais operações. O layout
 - **State** — representa os estados de uma solicitação e define quais transições são permitidas.
 - **UML / PlantUML** — documentação visual por diagramas `.puml`.
 
-Não são necessárias bibliotecas externas para executar a aplicação, desde que a instalação do Python tenha o Tkinter disponível.
 
-## 💻 Requisitos
-
-- Python **3.10+**.
-- Tkinter instalado e funcional.
-- Windows, macOS ou Linux com ambiente gráfico disponível.
-- Terminal ou editor de código, como o Visual Studio Code (opcional).
-
-Para verificar a versão do Python:
-
-```bash
-python --version
-```
-
-No Windows, também pode ser utilizado:
-
-```powershell
-py --version
-```
-
-Para verificar se o Tkinter está disponível:
-
-```bash
-python -m tkinter
-```
-
-Se o comando abrir uma pequena janela de demonstração, o Tkinter está disponível.
-
-## ▶️ Como obter e executar
-
-### 1. Baixe ou clone o projeto
-
-Se o projeto estiver em um repositório Git, execute:
-
-```bash
-git clone <URL_DO_REPOSITORIO>
-cd gestao-adocao-pets-main
-```
-
-Se você recebeu o projeto em um arquivo ZIP, extraia-o e abra a pasta `gestao-adocao-pets-main` no terminal ou editor.
-
-### 2. (Opcional) Crie um ambiente virtual
-
-O projeto não exige pacotes externos, mas um ambiente virtual pode ajudar a manter o ambiente de desenvolvimento organizado.
-
-Windows:
-
-```powershell
-py -m venv .venv
-.venv\Scripts\activate
-```
-
-macOS ou Linux:
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
-
-### 3. Inicie a aplicação
-
-Execute o comando a partir da pasta raiz do projeto, onde está o arquivo `main.py`.
-
-Windows:
-
-```powershell
-py main.py
-```
-
-Ou, se o comando `python` estiver configurado:
-
-```bash
-python main.py
-```
-
-macOS ou Linux:
-
-```bash
-python3 main.py
-```
-
-A janela **Patinhas Felizes | Gestão de Adoções** deverá ser aberta.
 
 ## 🐶 Como utilizar
 
@@ -300,7 +201,6 @@ A pasta `docs/` reúne material de apoio ao entendimento e à avaliação do pro
 - `docs/diagramas/componentes-mvc.puml` — diagrama dos componentes MVC.
 - `docs/diagramas/sequencia-adocao.puml` — sequência do fluxo de adoção.
 
-Os arquivos `.puml` podem ser visualizados com uma ferramenta compatível com PlantUML. Consulte também `criteriosAvaliacao.md` e `docs/criterios-avaliacao.md` para os critérios de avaliação do trabalho.
 
 ## ⚠️ Limitações conhecidas
 
@@ -310,22 +210,3 @@ Os arquivos `.puml` podem ser visualizados com uma ferramenta compatível com Pl
 - **Uso local:** a aplicação é uma interface desktop, não um site ou serviço web multiusuário.
 - **Interface gráfica:** é necessário executar o programa em um ambiente com suporte a janelas Tkinter.
 
-## 🚀 Possíveis melhorias futuras
-
-- Persistir cadastros e solicitações em SQLite ou outro banco de dados.
-- Implementar validação completa dos dígitos verificadores do CPF.
-- Adicionar edição e remoção de cadastros com regras de integridade.
-- Permitir filtros e pesquisa na listagem de animais.
-- Registrar datas de criação e decisão das solicitações.
-- Incluir fotos, descrição, porte e outras características dos animais.
-- Criar relatórios de adoções e de animais disponíveis.
-- Adicionar autenticação e níveis de acesso, caso o sistema passe a ser utilizado por várias pessoas.
-- Ampliar a cobertura de testes para interface e fluxos completos.
-
-## 🌐 Idioma
-
-A interface e a documentação principal estão em português. O diretório `docs/en/` contém documentação complementar em inglês.
-
----
-
-**Projeto acadêmico — Patinhas Felizes: Sistema de Gestão de Adoção de Animais.**
