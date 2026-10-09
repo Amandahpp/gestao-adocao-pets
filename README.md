@@ -1,70 +1,46 @@
-# Gestão de Adoção de Pets
+# Patinhas Felizes — Sistema de Gestão de Adoção
 
-Sistema gráfico integrado à banco de dados que tem como intuito aproximar animais em centros de adoção e pessoas que desejam adotar.
+Aplicativo acadêmico em Python com interface Tkinter. Permite cadastrar cães, gatos e adotantes; consultar animais; criar solicitações; e aprovar ou rejeitar solicitações.
 
-Foram utilizados os seguintes padrões de projeto para auxiliar no desenvolvimento:
--
+## Executar
 
-# Funcionalidades
-- Cadastro de animais: características, idade, dados de saúde
-- Cadastro de pessoas interessadas a adotar: preferências, tipo de residência, contato
-- Listagem de animais e adotantes
-- Gerenciamento de solicitações: abertura, aprovação, rejeição
+Requisitos: Python 3.10+ com Tkinter disponível. Não há dependências externas.
 
-# Instalação
-O programa não precisa de instalação, bastando que os arquivos estejam disponíveis localmente em uma máquina com interpretador python.
+1. Abra esta pasta no VS Code ou em um terminal.
+2. Execute `python main.py` (no Windows, também pode usar `py main.py`).
+3. Cadastre um animal e um adotante antes de registrar uma solicitação.
 
-dependências:
-- python
-- git
+## Regras principais
 
-```
-git clone https://github.com/Amandahpp/gestao-adocao-pets.git
-cd gestao-adocao-pets
-python -m src.main
-```
+- A idade do animal deve ser um inteiro maior ou igual a zero.
+- O CPF deve conter 11 dígitos (o formato é verificado; os dígitos verificadores não são validados).
+- Não são aceitos CPFs duplicados durante a execução.
+- Só pode haver uma solicitação pendente por animal.
+- A aprovação altera o status do animal para **Adotado**.
+- Solicitações aprovadas ou rejeitadas não podem mudar de estado.
+- Os dados ficam **somente na memória**. São perdidos ao fechar o programa.
 
-# Integrantes do projeto
+## Testes
 
-- Amanda Andreis Hoppe
-- Ana Paula de Oliveira Andreis
-- Elise C. de Lara
-- Maria Eduarda de Chaves
+Execute `python -m unittest discover -s tests -v` na raiz do projeto.
 
-# Classes do Sistema
+## Estrutura e documentação
 
-## Animal
+- `src/models/`: regras de negócio, classes de domínio, Factory, Singleton e State.
+- `src/controllers/`: coordenação das ações da interface (MVC).
+- `src/views/`: janelas, formulários, eventos e layouts Tkinter.
+- `docs/pt-br/` e `docs/en/`: documentação em português e inglês.
+- `docs/diagramas/`: diagramas UML em PlantUML (`.puml`).
+- `tests/`: testes automatizados das regras de negócio.
 
-Classe abstrata que representa um animal genérico no sistema. Possui atributos comuns a todos os animais, como id, nome, idade, sexo e status.
+Consulte [o índice da documentação](docs/README.md).
 
-## Cachorro
+---
 
-Classe que herda de Animal e representa um cachorro. Possui o atributo específico raça e implementa o método exibir_dados.
+# English — Pet Adoption Management
 
-## Gato
+This academic Python application uses Tkinter. It registers pets and adopters and manages adoption requests. Run `python main.py` from the project root. Run `python -m unittest discover -s tests -v` to check the business rules. Data stays in memory and is lost when the program closes. See [English documentation](docs/en/README.md).
 
-Classe que herda de Animal e representa um gato. Possui o atributo específico pelagem e implementa o método exibir_dados.
+## Interface visual
 
-## Adotante
-
-Representa uma pessoa interessada em adotar um animal. Armazena nome, CPF e telefone.
-
-## SolicitacaoAdocao
-
-Representa o pedido de adoção de um animal por um adotante. Utiliza o padrão State para controlar o estado da solicitação.
-
-## EstadoSolicitacao
-
-Classe abstrata que define os métodos que todos os estados da solicitação devem implementar: aprovar e rejeitar.
-
-## EstadoPendente, EstadoAprovada e EstadoRejeitada
-
-Classes concretas que representam os possíveis estados de uma solicitação de adoção.
-
-## AnimalFactory
-
-Classe responsável por aplicar o Factory Pattern, centralizando a criação de objetos do tipo Cachorro e Gato.
-
-## Abrigo
-
-Classe responsável por gerenciar os animais e as solicitações do sistema. Implementa o Singleton Pattern para garantir que exista apenas uma instância do abrigo durante a execução.
+O tema visual está em `src/views/theme.py`. A tela inicial é responsiva: duas colunas em janelas largas e uma coluna em janelas estreitas. Todas as janelas secundárias são centralizadas. Não há dependências externas para o tema.

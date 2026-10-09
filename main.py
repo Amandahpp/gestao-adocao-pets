@@ -1,18 +1,17 @@
-import sys
-import os
-
-# Garante que a raiz do projeto esteja no sys.path, independente
-# de onde o VSCode define o diretório de trabalho ao dar "Run".
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-
 import tkinter as tk
 from src.controllers.controller import Controller
+from src.views.theme import apply_theme
+
+
+def main():
+    root = tk.Tk()
+    root.title("Patinhas Felizes | Gestão de Adoções")
+    root.geometry("1000x760")
+    root.minsize(480, 580)
+    apply_theme(root)
+    Controller(root)
+    root.mainloop()
+
 
 if __name__ == "__main__":
-    root = tk.Tk()
-    root.title("Sistema de Adoção Patinhas Felizes")
-    root.geometry("400x350")
-
-    app = Controller(root)
-
-    root.mainloop()
+    main()
