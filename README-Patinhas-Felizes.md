@@ -159,32 +159,6 @@ Esse padrão concentra as regras de transição em classes específicas, em vez 
 - **View:** janelas, formulários, tabelas e componentes visuais em `src/views/`.
 - **Controller:** recebe ações da interface, chama as regras do domínio e apresenta mensagens em `src/controllers/`.
 
-## 🧪 Testes automatizados
-
-Os testes utilizam o módulo `unittest`, que já faz parte da biblioteca padrão do Python. Na raiz do projeto, execute:
-
-```bash
-python -m unittest discover -s tests -v
-```
-
-No Windows, também pode ser utilizado:
-
-```powershell
-py -m unittest discover -s tests -v
-```
-
-A suíte verifica, entre outros pontos:
-
-- criação de cachorro e gato pela fábrica;
-- reutilização da instância Singleton do abrigo;
-- aprovação e rejeição de solicitações;
-- mudança de situação do animal após aprovação;
-- bloqueio de duas solicitações pendentes para o mesmo animal;
-- impedimento de solicitação para animal já adotado;
-- validação de idade e formato do CPF;
-- impedimento de identificadores duplicados.
-
-O resultado esperado é que os testes sejam concluídos sem falhas. Caso algum teste falhe, confira a mensagem apresentada no terminal para identificar a regra que precisa ser investigada.
 
 ## 📐 Diagramas e documentação complementar
 
