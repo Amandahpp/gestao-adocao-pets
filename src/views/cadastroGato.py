@@ -1,51 +1,29 @@
-import tkinter as tk
 from tkinter import ttk
+import tkinter as tk
+from src.views.theme import center_window, form_shell, form_field
+
 
 class CadastroGatoView(tk.Toplevel):
     def __init__(self, parent, controller=None):
         super().__init__(parent)
         self.controller = controller
-
-        self.title("Cadastrar Gato")
-        self.geometry("300x240")
-        self.resizable(False, False)
-
-        self._build_interface()
-
-    def _build_interface(self):
-        frame = ttk.Frame(self, padding="15")
-        frame.pack(fill="both", expand=True)
-
-        ttk.Label(frame, text="Nome:").grid(row=0, column=0, sticky="w", pady=4)
-        self.ent_nome = ttk.Entry(frame)
-        self.ent_nome.grid(row=0, column=1, sticky="ew", pady=4)
-
-        ttk.Label(frame, text="Idade:").grid(row=1, column=0, sticky="w", pady=4)
-        self.ent_idade = ttk.Entry(frame)
-        self.ent_idade.grid(row=1, column=1, sticky="ew", pady=4)
-
-        ttk.Label(frame, text="Sexo:").grid(row=2, column=0, sticky="w", pady=4)
-        self.combo_sexo = ttk.Combobox(frame, values=["Macho", "Fêmea"], state="readonly")
-        self.combo_sexo.set("Macho")
-        self.combo_sexo.grid(row=2, column=1, sticky="ew", pady=4)
-
-        ttk.Label(frame, text="Pelagem:").grid(row=3, column=0, sticky="w", pady=4)
-        self.ent_pelagem = ttk.Entry(frame)
-        self.ent_pelagem.grid(row=3, column=1, sticky="ew", pady=4)
-
-        frame.columnconfigure(1, weight=1)
-
-        ttk.Button(frame, text="Salvar", command=self._salvar).grid(row=4, column=0, columnspan=2, pady=(15, 0))
+        self.title("Cadastrar gato")
+        center_window(self, 620, 460)
+        card = form_shell(self, "Cadastrar gato", "Preencha os dados do gato.")
+        self.ent_nome = ttk.Entry(card)
+        form_field(card, 0, "Nome", self.ent_nome)
+        self.ent_idade = ttk.Entry(card)
+        form_field(card, 1, "Idade (anos)", self.ent_idade)
+        self.combo_sexo = ttk.Combobox(card, values=["Macho", "Fêmea"], state="readonly")
+        self.combo_sexo.current(0)
+        form_field(card, 2, "Sexo", self.combo_sexo)
+        self.ent_pelagem = ttk.Entry(card)
+        form_field(card, 3, "Pelagem", self.ent_pelagem)
+        ttk.Button(card, text="Salvar cadastro", style="Accent.TButton", command=self._salvar).grid(row=4, column=1, sticky="e", pady=(20, 0))
+        self.ent_nome.focus_set()
 
     def _salvar(self):
-        nome = self.ent_nome.get().strip()
-        idade = self.ent_idade.get().strip()
-        sexo = self.combo_sexo.get()
-        pelagem = self.ent_pelagem.get().strip()
-
-        if self.controller is not None:
-            ok = self.controller.cadastrar_gato(nome, idade, sexo, pelagem)
-            if ok:
-                self.destroy()
-        else:
+        if self.controller is None:
+            return
+        if self.controller.cadastrar_gato(self.ent_nome.get().strip(), self.ent_idade.get().strip(), self.combo_sexo.get(), self.ent_pelagem.get().strip()):
             self.destroy()
