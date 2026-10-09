@@ -1,0 +1,20 @@
+@startuml
+left to right direction
+actor "Operador" as Op
+rectangle "Patinhas Felizes" {
+  usecase "Cadastrar cachorro" as UC1
+  usecase "Cadastrar gato" as UC2
+  usecase "Cadastrar adotante" as UC3
+  usecase "Listar animais" as UC4
+  usecase "Criar solicitação" as UC5
+  usecase "Aprovar solicitação" as UC6
+  usecase "Rejeitar solicitação" as UC7
+}
+Op --> UC1
+Op --> UC2
+Op --> UC3
+Op --> UC4
+Op --> UC5
+Op --> UC6
+Op --> UC7
+@enduml

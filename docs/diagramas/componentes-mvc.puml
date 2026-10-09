@@ -1,0 +1,13 @@
+@startuml
+package "View (src/views)" { [Janelas Tkinter] as View }
+package "Controller (src/controllers)" { [Controller] as Ctrl }
+package "Model (src/models)" {
+  [Abrigo e entidades] as Model
+  [AnimalFactory] as Factory
+  [Estados] as State
+}
+View --> Ctrl : eventos
+Ctrl --> Model : operações
+Ctrl --> Factory : criar animal
+Model --> State : transições
+@enduml

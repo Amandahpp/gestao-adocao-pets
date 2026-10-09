@@ -1,0 +1,49 @@
+@startuml
+skinparam classAttributeIconSize 0
+abstract class Animal {
+  +id
+  +nome
+  +idade
+  +sexo
+  +status
+  +exibir_dados()
+}
+class Cachorro
+class Gato
+class Adotante {
+  +nome
+  +cpf
+}
+class Abrigo <<Singleton>> {
+  +animais
+  +solicitacoes
+  +cadastrar_animal()
+  +cadastrar_solicitacao()
+}
+class AnimalFactory <<Factory>> {
+  +criar_animal()
+}
+class SolicitacaoAdocao {
+  +animal
+  +adotante
+  +status
+  +aprovar()
+  +rejeitar()
+}
+abstract class EstadoSolicitacao <<State>>
+class EstadoPendente
+class EstadoAprovada
+class EstadoRejeitada
+Animal <|-- Cachorro
+Animal <|-- Gato
+AnimalFactory ..> Cachorro
+AnimalFactory ..> Gato
+Abrigo "1" o-- "0..*" Animal
+Abrigo "1" o-- "0..*" SolicitacaoAdocao
+SolicitacaoAdocao --> "1" Animal
+SolicitacaoAdocao --> "1" Adotante
+SolicitacaoAdocao --> "1" EstadoSolicitacao
+EstadoSolicitacao <|-- EstadoPendente
+EstadoSolicitacao <|-- EstadoAprovada
+EstadoSolicitacao <|-- EstadoRejeitada
+@enduml

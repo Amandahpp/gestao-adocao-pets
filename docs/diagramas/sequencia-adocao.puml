@@ -1,0 +1,19 @@
+@startuml
+actor Operador
+participant "CadastroSolicitacaoView" as View
+participant Controller
+participant Abrigo
+participant "SolicitacaoAdocao" as Sol
+participant "EstadoPendente" as State
+Operador -> View : Seleciona animal e adotante
+View -> Controller : cadastrar_solicitacao(indices)
+Controller -> Sol : cria(animal, adotante)
+Controller -> Abrigo : cadastrar_solicitacao(Sol)
+Abrigo --> Controller : registro aceito
+Controller --> View : True
+Operador -> Controller : alterar_solicitacao(indice, aprovar)
+Controller -> Sol : aprovar()
+Sol -> State : aprovar(Sol)
+State -> Sol : estado = EstadoAprovada
+State -> Sol : animal.status = Adotado
+@enduml
