@@ -1,0 +1,41 @@
+@startuml
+title Atividades - Processo de adoção
+
+|Operador|
+start
+:Cadastrar animal\n(cachorro ou gato);
+:Cadastrar adotante;
+:Abrir "Nova solicitação";
+
+|Sistema|
+if (Existe animal disponível\nsem solicitação pendente?) then (não)
+  :Aviso "Não há animais disponíveis\nsem solicitação pendente.";
+  stop
+elseif (Existe adotante cadastrado?) then (não)
+  :Aviso "Cadastre um adotante antes.";
+  stop
+endif
+
+|Operador|
+:Escolher animal e adotante;
+:Clicar em "Enviar solicitação";
+
+|Sistema|
+:Registrar solicitação\n(estado Pendente);
+
+|Operador|
+:Abrir "Gerenciar solicitações";
+:Selecionar uma solicitação;
+if (Decisão?) then (aprovar)
+  |Sistema|
+  :Estado muda para Aprovada;
+  :Animal fica "Adotado";
+else (rejeitar)
+  |Sistema|
+  :Estado muda para Rejeitada;
+endif
+
+|Operador|
+:Ver tabela atualizada;
+stop
+@enduml
