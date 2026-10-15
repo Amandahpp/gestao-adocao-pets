@@ -1,21 +1,38 @@
-# Arquitetura do sistema
+# Arquitetura
 
-O projeto utiliza uma organização **MVC simplificada**.
+O projeto usa o padrão **MVC simplificado**. O código está dividido em três pastas.
 
-- **Model:** contém `Animal`, `Cachorro`, `Gato`, `Adotante`, `Abrigo` e `SolicitacaoAdocao`. Aplica as regras de negócio.
-- **View:** contém janelas Tkinter. Mostra campos e tabelas. Encaminha eventos para o controlador.
-- **Controller:** recebe ações da interface. Valida o fluxo, chama os modelos e apresenta mensagens.
+| Camada | Pasta | Função |
+|---|---|---|
+| Model | `src/models/` | Guarda os dados e as regras de negócio. |
+| View | `src/views/` | Mostra as janelas e recebe os cliques. |
+| Controller | `src/controllers/` | Liga as janelas às regras. |
 
-## Fluxo de adoção
+## Classes de cada camada
 
-1. A pessoa seleciona um animal disponível e um adotante.
-2. A interface envia os índices ao controlador.
-3. O controlador cria `SolicitacaoAdocao` e pede ao abrigo que registre a solicitação.
-4. O abrigo impede solicitações duplicadas pendentes para o mesmo animal.
-5. O controlador recebe o pedido de aprovação ou rejeição.
-6. O objeto de estado executa a transição permitida.
-7. Se houver aprovação, o animal passa para `Adotado`.
+- **Model:** `Animal`, `Cachorro`, `Gato`, `AnimalFactory`, `Adotante`, `Abrigo`, `SolicitacaoAdocao`, `EstadoSolicitacao`, `EstadoPendente`, `EstadoAprovada` e `EstadoRejeitada`.
+- **View:** `MainView`, `CadastroCachorroView`, `CadastroGatoView`, `CadastroAdotanteView`, `CadastroSolicitacaoView`, `ListagemAnimaisView` e `GerenciadorSolicitacoesView`. O arquivo `theme.py` define o estilo visual.
+- **Controller:** a classe `Controller`. Ela cria o `Abrigo`, guarda a lista de adotantes, abre as janelas e chama os modelos.
 
-## Limites
+## Fluxo de uma adoção
 
-O programa não possui autenticação, banco de dados ou integração com serviços externos. O uso previsto é uma demonstração acadêmica local.
+1. A pessoa escolhe um animal e um adotante em `CadastroSolicitacaoView`.
+2. A view chama `Controller.cadastrar_solicitacao`.
+3. O controller cria uma `SolicitacaoAdocao` com o estado `EstadoPendente`.
+4. O controller pede ao `Abrigo` que registre a solicitação.
+5. O `Abrigo` confere três regras. O animal está cadastrado. O animal está disponível. O animal não tem outra solicitação pendente. Se uma regra falha, o `Abrigo` gera um erro.
+6. O controller mostra uma mensagem de sucesso ou de aviso.
+7. Em `GerenciadorSolicitacoesView`, a pessoa escolhe **Aprovar** ou **Rejeitar**. A view chama `Controller.alterar_solicitacao`.
+8. A solicitação passa a ação para o objeto de estado atual.
+9. O estado `EstadoPendente` executa a mudança. Ao aprovar, ele muda o animal para "Adotado". Os outros estados geram um erro.
+
+## Limites desta etapa
+
+Estes pontos não impedem o funcionamento. Podem ser melhorados em uma próxima etapa.
+
+- O controller mostra mensagens com `messagebox`, que é um componente do Tkinter. No MVC estrito, essa tarefa é da view.
+- As views leem as listas diretamente de `controller.abrigo`.
+- A regra "animal disponível e sem solicitação pendente" aparece no `Controller` e em `CadastroSolicitacaoView`.
+- A lista de adotantes fica no `Controller`. A lista de animais fica no `Abrigo`.
+- Os status são textos soltos, como "Disponível" e "Pendente".
+- Não há persistência. Os dados ficam na memória.
