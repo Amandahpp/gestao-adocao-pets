@@ -1,186 +1,95 @@
-# 🐾 Patinhas Felizes — Sistema de Gestão de Adoção de Animais
+# Patinhas Felizes
 
-Aplicação desktop acadêmica desenvolvida em **Python** com **Tkinter** para apoiar a gestão de animais disponíveis para adoção, o cadastro de pessoas interessadas e o acompanhamento de solicitações de adoção.
+Sistema de gestão de adoção de animais. Trabalho da disciplina de Linguagem de Programação Orientada a Objetos (LPOO).
 
-O projeto demonstra conceitos de Programação Orientada a Objetos (POO), organização em camadas inspirada no padrão **MVC**, e padrões de projeto como **Factory**, **Singleton** e **State**.
+**Integrantes:** Amanda Andreis Hoppe, Ana Paula de Oliveira Andreis, Maria Eduarda de Chaves
+                
 
-> **Importante:** esta versão mantém os dados apenas em memória. Ao fechar o programa, os cadastros e solicitações são perdidos. O sistema não utiliza banco de dados.
+## O que o sistema faz
 
-## 🎯 Objetivos
+O sistema cadastra cachorros, gatos e adotantes. O operador cria uma solicitação de adoção para um animal. O operador aprova ou rejeita a solicitação. Quando ele aprova, o animal passa a ter o status "Adotado".
 
-- Organizar o cadastro de cães e gatos disponíveis para adoção.
-- Registrar os dados básicos dos adotantes.
-- Criar solicitações de adoção relacionando um animal a um adotante.
-- Permitir aprovar ou rejeitar solicitações.
-- Atualizar a disponibilidade do animal quando uma adoção é aprovada.
-- Aplicar conceitos de orientação a objetos, separação de responsabilidades e padrões de projeto.
+Nesta primeira parte do trabalho, o sistema guarda os dados somente na memória. Ao fechar o programa, os dados são apagados. A segunda parte do trabalho vai incluir um banco de dados.
 
-## ✨ Funcionalidades
+## Como executar
 
-### Cadastro de animais
+Requisito: Python 3.10 ou superior. O Tkinter faz parte da instalação padrão do Python no Windows. No Linux, pode ser necessário instalar o pacote `python3-tk`.
 
-- Cadastro de **cachorros**, com nome, idade, sexo e raça.
-- Cadastro de **gatos**, com nome, idade, sexo e pelagem.
-- Geração automática de identificador para cada animal durante a execução.
-- Consulta dos animais cadastrados, com tipo, idade e situação.
+1. Baixe ou clone este repositório.
+2. Abra um terminal na pasta que contém o arquivo `main.py`.
+3. Execute o comando:
 
-### Cadastro de adotantes
-
-- Registro de nome, CPF e telefone.
-- Verificação de que o CPF informado contém 11 dígitos numéricos.
-- Impedimento de CPF duplicado durante a execução atual.
-
-### Solicitações de adoção
-
-- Criação de uma solicitação para um animal disponível e um adotante cadastrado.
-- Exibição das solicitações e de seus estados.
-- Aprovação ou rejeição de uma solicitação pendente.
-- Ao aprovar uma solicitação, o animal passa para o estado **Adotado**.
-- Ao rejeitar, o animal permanece **Disponível**.
-
-### Interface gráfica
-
-A tela inicial apresenta cartões de acesso às principais operações. O layout reorganiza os cartões em duas colunas em janelas mais largas e em uma coluna em janelas estreitas. Formulários e tabelas são exibidos em janelas secundárias.
-
-## 🧰 Tecnologias e conceitos
-
-- **Python 3.10 ou superior** — linguagem de programação.
-- **Tkinter / ttk** — biblioteca padrão do Python utilizada na interface gráfica.
-- **unittest** — biblioteca padrão utilizada nos testes automatizados.
-- **Programação Orientada a Objetos** — classes, herança, encapsulamento, propriedades e abstração.
-- **MVC (Model–View–Controller)** — separação entre dados/regras, interface e coordenação das ações.
-- **Factory Method (fábrica simples)** — criação de objetos `Cachorro` ou `Gato` conforme o tipo informado.
-- **Singleton** — mantém uma única instância de `Abrigo` durante a execução.
-- **State** — representa os estados de uma solicitação e define quais transições são permitidas.
-- **UML / PlantUML** — documentação visual por diagramas `.puml`.
-
-
-
-## 🐶 Como utilizar
-
-Uma sequência básica para experimentar o sistema é:
-
-1. **Cadastre um cachorro ou gato.** Preencha nome, idade, sexo e o campo específico da espécie (raça ou pelagem).
-2. **Cadastre um adotante.** Informe nome, CPF com 11 dígitos e telefone.
-3. **Consulte os animais.** Confira os animais registrados e se estão disponíveis ou adotados.
-4. **Crie uma solicitação.** Selecione um animal disponível sem outra solicitação pendente e escolha um adotante já cadastrado.
-5. **Gerencie a solicitação.** Na tela de gerenciamento, selecione uma solicitação e escolha **Aprovar** ou **Rejeitar**.
-6. **Confira o resultado.** Uma solicitação aprovada passa a ter o estado `Aprovada` e o animal relacionado passa a `Adotado`. Uma solicitação rejeitada passa a `Rejeitada`, e o animal continua disponível.
-
-O menu inicial contém as opções **Cadastrar cachorro**, **Cadastrar gato**, **Consultar animais**, **Cadastrar adotante**, **Nova solicitação** e **Gerenciar solicitações**.
-
-## 📏 Regras de negócio
-
-- O nome do animal não pode ficar vazio.
-- A idade deve ser um número inteiro maior ou igual a zero.
-- O sexo deve ser `Macho` ou `Fêmea`.
-- O campo específico do animal (raça ou pelagem) deve ser preenchido pela interface.
-- O nome do adotante não pode ficar vazio.
-- O CPF deve conter 11 dígitos. **A validação atual não verifica os dígitos verificadores do CPF**; verifica apenas a quantidade de números.
-- Não é permitido cadastrar dois adotantes com o mesmo CPF durante a execução atual.
-- Cada animal recebe um identificador, e o abrigo não aceita identificadores duplicados.
-- Só é possível solicitar a adoção de um animal cadastrado e disponível.
-- Não pode existir mais de uma solicitação **pendente** para o mesmo animal.
-- A aprovação só pode ocorrer enquanto a solicitação estiver pendente e o animal estiver disponível.
-- Aprovar uma solicitação altera o status do animal para `Adotado`.
-- Rejeitar uma solicitação não altera a disponibilidade do animal.
-- Uma solicitação aprovada não pode ser rejeitada; uma solicitação rejeitada não pode ser aprovada.
-- Os dados permanecem disponíveis apenas enquanto o programa está aberto.
-
-## 🗂️ Arquitetura do projeto
-
-```text
-gestao-adocao-pets-main/
-├── main.py                         # Ponto de entrada da aplicação
-├── README.md                       # Documentação principal
-├── criteriosAvaliacao.md            # Critérios de avaliação
-├── docs/
-│   ├── README.md                   # Índice da documentação
-│   ├── criterios-avaliacao.md      # Critérios de avaliação detalhados
-│   ├── pt-br/                      # Documentação em português
-│   ├── en/                         # Documentation in English
-│   └── diagramas/                  # Diagramas UML em PlantUML
-├── src/
-│   ├── controllers/                # Coordenação entre interface e regras
-│   ├── models/                     # Entidades e regras de negócio
-│   └── views/                      # Interface gráfica Tkinter
-└── tests/
-    └── test_models.py              # Testes automatizados dos modelos
+```
+python main.py
 ```
 
-### Responsabilidade dos principais módulos
+Para executar os testes automáticos:
 
-| Caminho | Responsabilidade |
+```
+python -m unittest tests.test_models
+```
+
+## Como usar
+
+1. Cadastre um cachorro ou um gato.
+2. Cadastre um adotante. O CPF deve ter 11 dígitos. O sistema conta só os dígitos e ignora pontos e traços.
+3. Abra **Nova solicitação**. Escolha um animal e um adotante.
+4. Abra **Gerenciar solicitações**. Selecione uma solicitação. Clique em **Aprovar** ou **Rejeitar**.
+5. Abra **Consultar animais** para ver o status de cada animal.
+
+## Regras do sistema
+
+- O nome do animal e o nome do adotante não podem ficar vazios.
+- A idade do animal é um número inteiro maior ou igual a zero.
+- O sexo do animal é "Macho" ou "Fêmea".
+- Raça (cachorro) e pelagem (gato) não podem ficar vazias.
+- Não pode haver dois adotantes com o mesmo CPF.
+- Só é possível solicitar um animal cadastrado e disponível.
+- Cada animal pode ter apenas uma solicitação pendente.
+- Uma solicitação aprovada ou rejeitada não pode mais mudar.
+- Rejeitar uma solicitação não altera o status do animal.
+
+## Conceitos de POO neste projeto
+
+| Conceito | Onde está |
 |---|---|
-| `main.py` | Cria a janela principal, aplica o tema e inicia o controlador. |
-| `src/models/animal.py` | Define a classe abstrata `Animal` e valida os dados comuns. |
-| `src/models/cachorro.py` | Implementa a entidade `Cachorro`, derivada de `Animal`. |
-| `src/models/gato.py` | Implementa a entidade `Gato`, derivada de `Animal`. |
-| `src/models/adotante.py` | Representa o adotante e valida nome e formato do CPF. |
-| `src/models/abrigo.py` | Mantém a coleção de animais e solicitações e aplica regras do abrigo. |
-| `src/models/animal_factory.py` | Cria o tipo correto de animal a partir do tipo solicitado. |
-| `src/models/solicitacao_adocao.py` | Representa uma solicitação, seus participantes e seu estado. |
-| `src/models/estado_solicitacao.py` | Define a interface dos estados de solicitação. |
-| `src/models/estados.py` | Implementa os estados pendente, aprovada e rejeitada. |
-| `src/controllers/controller.py` | Coordena as operações acionadas pela interface e trata mensagens de validação. |
-| `src/views/main_menu.py` | Apresenta o menu inicial e os atalhos para as funcionalidades. |
-| `src/views/cadastroCachorro.py` | Formulário de cadastro de cachorro. |
-| `src/views/cadastroGato.py` | Formulário de cadastro de gato. |
-| `src/views/cadastroAdotante.py` | Formulário de cadastro de adotante. |
-| `src/views/cadastroSolicitacao.py` | Formulário de criação de solicitação de adoção. |
-| `src/views/listagemAnimais.py` | Tabela de consulta de animais cadastrados. |
-| `src/views/gerenciarSolicitacao.py` | Tabela e ações para aprovar ou rejeitar solicitações. |
-| `src/views/theme.py` | Estilos, cores, organização visual e centralização das janelas. |
-| `tests/test_models.py` | Testes das regras de negócio e dos padrões implementados. |
+| Abstração | `Animal` é uma classe abstrata com o método abstrato `exibir_dados()`. |
+| Herança | `Cachorro` e `Gato` herdam de `Animal`. |
+| Polimorfismo | Os três estados da solicitação respondem de forma diferente à mesma chamada `aprovar()`. `Cachorro` e `Gato` implementam `exibir_dados()` cada um à sua maneira. |
+| Encapsulamento | Os atributos são privados. O acesso é feito por propriedades (`@property`). Os construtores validam os dados. |
+| Associação | `Abrigo` guarda animais e solicitações. `SolicitacaoAdocao` liga um animal a um adotante. |
 
-## 🧩 Padrões de projeto
+## Padrões de projeto
 
-### Factory — `AnimalFactory`
+| Padrão | Classe | Função |
+|---|---|---|
+| Singleton | `Abrigo` | Existe um único abrigo durante a execução. |
+| Factory (fábrica simples) | `AnimalFactory` | Cria `Cachorro` ou `Gato` conforme o tipo pedido. |
+| State | `EstadoSolicitacao` e suas subclasses | Define o que cada estado da solicitação permite. |
 
-Centraliza a criação de animais. Recebe o tipo (`cachorro` ou `gato`) e os dados necessários, retornando uma instância da classe correspondente. Isso evita espalhar a lógica de escolha da classe pelo código que solicita o cadastro.
+A arquitetura é MVC simplificada: `models/` guarda as regras, `views/` guarda as janelas e `controllers/` liga as duas partes. Os motivos de cada escolha estão em [docs/pt-br/decisoes.md](docs/pt-br/decisoes.md).
 
-### Singleton — `Abrigo`
+## Estrutura de pastas
 
-A classe `Abrigo` reutiliza a mesma instância durante a execução do programa, mantendo uma coleção central de animais e solicitações. Esse comportamento é reiniciado quando o processo termina, pois não há persistência em arquivo ou banco de dados.
+```
+.
+├── main.py                  Ponto de entrada
+├── criteriosAvaliacao.md    Critérios do professor
+├── docs/                    Documentação e diagramas UML
+├── src/
+│   ├── models/              Entidades e regras de negócio
+│   ├── views/               Janelas Tkinter
+│   └── controllers/         Controller principal
+└── tests/
+    └── test_models.py       Testes automáticos dos modelos
+```
 
-### State — estados da solicitação
+## Documentação
 
-A solicitação delega as operações de aprovação e rejeição ao objeto que representa seu estado atual:
+Veja a pasta [docs](docs/README.md). Ela contém os textos em português e em inglês e os diagramas UML.
 
-- `EstadoPendente`: permite aprovar ou rejeitar.
-- `EstadoAprovada`: impede novas mudanças de estado e impede rejeição.
-- `EstadoRejeitada`: impede novas mudanças de estado e impede aprovação.
+## Limitações desta etapa
 
-Esse padrão concentra as regras de transição em classes específicas, em vez de depender de várias condições espalhadas pelo sistema.
-
-### MVC — separação de responsabilidades
-
-- **Model:** entidades e regras de negócio, localizadas principalmente em `src/models/`.
-- **View:** janelas, formulários, tabelas e componentes visuais em `src/views/`.
-- **Controller:** recebe ações da interface, chama as regras do domínio e apresenta mensagens em `src/controllers/`.
-
-
-## 📐 Diagramas e documentação complementar
-
-A pasta `docs/` reúne material de apoio ao entendimento e à avaliação do projeto:
-
-- `docs/README.md` — índice da documentação.
-- `docs/pt-br/README.md` — visão geral em português.
-- `docs/pt-br/arquitetura.md` — arquitetura da aplicação.
-- `docs/pt-br/decisoes.md` — decisões e justificativas de projeto.
-- `docs/pt-br/interface.md` — documentação da interface.
-- `docs/en/` — documentação equivalente em inglês.
-- `docs/diagramas/casos-de-uso.puml` — diagrama de casos de uso.
-- `docs/diagramas/classes.puml` — diagrama de classes.
-- `docs/diagramas/componentes-mvc.puml` — diagrama dos componentes MVC.
-- `docs/diagramas/sequencia-adocao.puml` — sequência do fluxo de adoção.
-
-
-## ⚠️ Limitações conhecidas
-
-- **Sem persistência:** os dados são mantidos em memória e desaparecem ao encerrar o programa.
-- **CPF:** a validação confere a quantidade de dígitos, mas não verifica os dígitos verificadores.
-- **Sem autenticação:** não há perfis de usuário, login ou permissões.
-- **Uso local:** a aplicação é uma interface desktop, não um site ou serviço web multiusuário.
-- **Interface gráfica:** é necessário executar o programa em um ambiente com suporte a janelas Tkinter.
-
+- Os dados não são salvos. Eles somem quando o programa fecha. O banco de dados está previsto para a segunda parte.
+- O sistema confere só a quantidade de dígitos do CPF. Ele não valida os dígitos verificadores.
+- O sistema não valida o telefone.
