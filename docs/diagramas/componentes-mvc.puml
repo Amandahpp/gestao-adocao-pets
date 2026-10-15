@@ -1,13 +1,36 @@
 @startuml
-package "View (src/views)" { [Janelas Tkinter] as View }
-package "Controller (src/controllers)" { [Controller] as Ctrl }
-package "Model (src/models)" {
-  [Abrigo e entidades] as Model
-  [AnimalFactory] as Factory
-  [Estados] as State
+title Arquitetura MVC simplificada
+
+package "View (src/views)" {
+  [MainView]
+  [Janelas] as Janelas
 }
-View --> Ctrl : eventos
-Ctrl --> Model : operações
-Ctrl --> Factory : criar animal
-Model --> State : transições
+
+package "Controller (src/controllers)" {
+  [Controller]
+}
+
+package "Model (src/models)" {
+  [Abrigo]
+  [Animal, Cachorro e Gato] as Animais
+  [Adotante]
+  [SolicitacaoAdocao e estados] as Solicitacao
+  [AnimalFactory]
+}
+
+MainView --> Controller : cliques
+Janelas --> Controller : cliques e dados
+Controller ..> MainView : cria
+Controller ..> Janelas : abre e mostra mensagens
+Controller --> Abrigo : registra e consulta
+Controller --> AnimalFactory : cria animal
+Controller --> Adotante : cria adotante
+Controller --> Solicitacao : cria e altera
+Janelas ..> Abrigo : lê listas
+
+note bottom of Controller
+  Limites desta etapa:
+  o Controller usa messagebox (Tkinter)
+  e as janelas leem listas do Abrigo.
+end note
 @enduml
