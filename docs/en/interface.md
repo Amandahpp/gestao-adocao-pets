@@ -1,25 +1,49 @@
-# Graphical user interface — updated design
+# Graphical user interface
 
-The application uses Tkinter and ttk. It does not require external UI packages. The file `src/views/theme.py` defines colors, fonts, buttons, entry fields, and table styles.
+The interface uses **Tkinter** and the **ttk** widgets from the Python standard library. The file `src/views/theme.py` defines the colors, the fonts, and the style of buttons, fields, and tables.
 
-## Responsive layout
+## Windows
 
-- The main window starts at 1000 × 760 pixels. The user can resize it.
-- The main menu shows two card columns in a wide window. It shows one column in a narrow window.
-- Grid weights let the cards use the available width.
-- Forms and tables expand with their containers.
-- Secondary windows open near the center of the screen.
+- The main window starts at 1000 × 760 pixels. The minimum size is 480 × 580 pixels.
+- The main window shows six cards. Each card has an **Abrir →** (Open) button.
+- Each function opens a secondary window (`Toplevel`). The code centers this window on the screen.
 
-## Components and events
+| Card | Window | Main components |
+|---|---|---|
+| Cadastrar cachorro (Register dog) | `CadastroCachorroView` | Text fields, selection list, button |
+| Cadastrar gato (Register cat) | `CadastroGatoView` | Text fields, selection list, button |
+| Consultar animais (View animals) | `ListagemAnimaisView` | Table, scroll bar, button |
+| Cadastrar adotante (Register adopter) | `CadastroAdotanteView` | Text fields, button |
+| Nova solicitação (New request) | `CadastroSolicitacaoView` | Two selection lists, button |
+| Gerenciar solicitações (Manage requests) | `GerenciadorSolicitacoesView` | Table, scroll bar, three buttons |
 
-- `Tk` creates the main window. `Toplevel` creates secondary windows.
-- `Frame` groups controls. `Label` identifies fields.
-- `Entry` accepts text. `Combobox` selects an item.
-- `Treeview` displays records. `Scrollbar` scrolls tables.
-- `Button` uses `command` to call an action.
-- The `<Configure>` event changes the menu layout when the window width changes.
+## Components
 
-The program uses `pack` and `grid` in separate containers. The views call the Controller to perform operations. This keeps the MVC structure.
+| Tkinter component | Use |
+|---|---|
+| `Tk` | Main window. |
+| `Toplevel` | Secondary windows. |
+| `Frame` | Groups the other components. |
+| `Label` | Titles, text, and field names. |
+| `Entry` | Text field. |
+| `Combobox` | Selection list, for example the sex and the animal choice. |
+| `Treeview` | Table of animals and requests. |
+| `Scrollbar` | Scroll bar for the tables. |
+| `Button` | Buttons that start an action. |
+| `messagebox` | Warning and success dialogs. |
 
-### Visual palette
-The main menu keeps six responsive cards in two columns on wide screens. The cards use pastel blue, orange, green, pink, yellow-orange, and lilac backgrounds. Each card has a matching action button. Original emoji icons and actions remain unchanged. Other screens use a light theme with blue accents.
+## Events
+
+- Each button uses the parameter `command` to call a method of the controller or the view.
+- The event `<Configure>` of the main window changes the card layout when the window size changes.
+- The request table uses `selection()` to find the row that the user selected.
+
+## Screen layout
+
+- The main screen uses two columns when the window is 750 pixels wide or more. Below this width, it uses one column.
+- The code uses `grid` and `pack` in different containers. Tkinter does not permit both in the same container.
+- Forms and tables expand with the window.
+
+## Visual style
+
+The `ttk` theme `clam` is the base. The file `theme.py` defines a palette with a light background and blue accents. The six cards on the main screen have different colors: blue, orange, green, pink, yellow-orange, and lilac.
