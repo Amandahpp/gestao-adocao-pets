@@ -1,25 +1,49 @@
-# Interface gráfica — versão visual atualizada
+# Interface gráfica
 
-A aplicação utiliza Tkinter e ttk, sem dependências externas. O arquivo `src/views/theme.py` centraliza a paleta de cores, tipografia e estilos de botões, entradas e tabelas.
+A interface usa **Tkinter** e os componentes **ttk**, da biblioteca padrão do Python. O arquivo `src/views/theme.py` define as cores, as fontes e o estilo de botões, campos e tabelas.
 
-## Organização responsiva
+## Janelas
 
-- A janela principal inicia com 1000 × 760 pixels e pode ser redimensionada.
-- O menu utiliza `grid`, com cartões organizados em duas colunas em janelas largas e uma coluna em janelas estreitas.
-- As colunas possuem peso de expansão, para que os cartões ocupem a largura disponível.
-- Formulários e tabelas usam contêineres com expansão horizontal e vertical.
-- Janelas secundárias são centralizadas na tela.
+- A janela principal usa o tamanho inicial de 1000 × 760 pixels. O tamanho mínimo é 480 × 580 pixels.
+- A janela principal mostra seis cartões. Cada cartão tem um botão **Abrir →**.
+- Cada função abre uma janela secundária (`Toplevel`). O código centraliza essa janela na tela.
 
-## Componentes e eventos
+| Cartão | Janela aberta | Componentes principais |
+|---|---|---|
+| Cadastrar cachorro | `CadastroCachorroView` | Campos de texto, lista de seleção, botão |
+| Cadastrar gato | `CadastroGatoView` | Campos de texto, lista de seleção, botão |
+| Consultar animais | `ListagemAnimaisView` | Tabela, barra de rolagem, botão |
+| Cadastrar adotante | `CadastroAdotanteView` | Campos de texto, botão |
+| Nova solicitação | `CadastroSolicitacaoView` | Duas listas de seleção, botão |
+| Gerenciar solicitações | `GerenciadorSolicitacoesView` | Tabela, barra de rolagem, três botões |
 
-- `Tk` cria a janela principal; `Toplevel` cria as janelas secundárias.
-- `Frame` organiza o conteúdo; `Label` identifica ações e campos.
-- `Entry` recebe texto; `Combobox` permite seleção entre opções.
-- `Treeview` mostra animais e solicitações; `Scrollbar` permite rolar tabelas.
-- `Button` executa operações por meio de `command`.
-- O evento `<Configure>` ajusta o número de colunas do menu à largura disponível.
+## Componentes usados
 
-Os gerenciadores `pack` e `grid` são utilizados em contêineres diferentes, conforme as regras do Tkinter. A interface encaminha as ações ao Controller, mantendo a arquitetura MVC.
+| Componente Tkinter | Uso |
+|---|---|
+| `Tk` | Janela principal. |
+| `Toplevel` | Janelas secundárias. |
+| `Frame` | Agrupa os outros componentes. |
+| `Label` | Títulos, textos e nomes dos campos. |
+| `Entry` | Campo de texto. |
+| `Combobox` | Lista de seleção, como o sexo e a escolha do animal. |
+| `Treeview` | Tabela de animais e de solicitações. |
+| `Scrollbar` | Barra de rolagem das tabelas. |
+| `Button` | Botões que executam uma ação. |
+| `messagebox` | Caixas de aviso e de sucesso. |
 
-### Paleta visual
-O menu mantém seis cartões responsivos em duas colunas em telas largas, com fundos pastéis azul, laranja, verde, rosa, amarelo-alaranjado e lilás. Cada cartão usa botão na mesma família de cor. Os emojis e os comandos originais foram preservados. O restante das telas usa um tema claro com detalhes em azul.
+## Eventos
+
+- Cada botão usa o parâmetro `command` para chamar um método do controller ou da view.
+- O evento `<Configure>` da janela principal reorganiza os cartões quando a janela muda de tamanho.
+- A tabela de solicitações usa `selection()` para saber qual linha a pessoa escolheu.
+
+## Organização da tela
+
+- A tela principal usa duas colunas quando a largura da janela é de 750 pixels ou mais. Abaixo disso, usa uma coluna.
+- O código usa `grid` e `pack` em contêineres diferentes. O Tkinter não permite os dois no mesmo contêiner.
+- Formulários e tabelas se expandem junto com a janela.
+
+## Estilo visual
+
+O tema `clam` do `ttk` é a base. O arquivo `theme.py` define uma paleta com fundo claro e destaques em azul. Os seis cartões da tela principal têm cores diferentes: azul, laranja, verde, rosa, amarelo-alaranjado e lilás.
