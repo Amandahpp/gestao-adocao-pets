@@ -14,5 +14,3 @@
 - [Architecture](en/architecture.md)
 - [Design decisions](en/decisions.md)
 - [User interface](en/interface.md)
-
-Os textos seguem os princípios do critério C1: frases curtas e um termo para cada conceito. Não há certificação formal.
