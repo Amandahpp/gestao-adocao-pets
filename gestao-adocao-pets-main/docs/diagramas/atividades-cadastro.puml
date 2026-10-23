@@ -1,0 +1,29 @@
+@startuml
+title Atividades - Cadastrar animal
+
+start
+:Preencher nome, idade, sexo\ne raça ou pelagem;
+:Clicar em "Salvar cadastro";
+
+if (A idade tem só dígitos?) then (não)
+  :Aviso "A idade deve ser um número\ninteiro não negativo.";
+  stop
+endif
+
+if (Raça ou pelagem preenchida?) then (não)
+  :Aviso "Preencha todos os campos do animal.";
+  stop
+endif
+
+:AnimalFactory cria o animal;
+
+if (Nome preenchido e sexo válido?) then (não)
+  :Aviso de validação do modelo;
+  stop
+endif
+
+:Abrigo guarda o animal;
+:Mensagem de sucesso;
+:Fechar janela;
+stop
+@enduml

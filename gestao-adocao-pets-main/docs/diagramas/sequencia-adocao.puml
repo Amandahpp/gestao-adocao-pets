@@ -1,0 +1,30 @@
+@startuml
+title Sequência - registrar e aprovar uma solicitação
+
+actor Operador
+participant "CadastroSolicitacaoView" as View
+participant "GerenciadorSolicitacoesView" as GView
+participant Controller
+participant Abrigo
+participant SolicitacaoAdocao as Sol
+participant EstadoPendente as Pend
+participant Animal
+
+== Registrar a solicitação ==
+Operador -> View : escolhe animal e adotante\nclica em "Enviar solicitação"
+View -> Controller : cadastrar_solicitacao(indice_animal, indice_adotante)
+Controller -> Sol : cria SolicitacaoAdocao(animal, adotante)
+Controller -> Abrigo : cadastrar_solicitacao(Sol)
+Abrigo -> Abrigo : confere as regras
+Abrigo --> Controller : registro aceito
+Controller --> View : True (mensagem de sucesso)
+
+== Aprovar a solicitação ==
+Operador -> GView : seleciona a linha\nclica em "Aprovar"
+GView -> Controller : alterar_solicitacao(indice, "aprovar")
+Controller -> Sol : aprovar()
+Sol -> Pend : aprovar(Sol)
+Pend -> Animal : status = "Adotado"
+Pend -> Sol : estado = EstadoAprovada
+Controller --> GView : True (mensagem de sucesso)
+@enduml
