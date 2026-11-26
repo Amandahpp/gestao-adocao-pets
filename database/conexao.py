@@ -1,14 +1,4 @@
-"""Conexão com o PostgreSQL e controle de transação.
 
-A configuração vem de variáveis de ambiente. Se a variável não existir, vale o padrão:
-
-    DB_HOST      localhost
-    DB_PORT      5432
-    DB_NAME      patinhas
-    DB_USER      postgres
-    DB_PASSWORD  (vazia)
-    DB_SCHEMA    (vazio: usa o schema padrão; os testes usam um schema próprio)
-"""
 import os
 from contextlib import contextmanager
 
