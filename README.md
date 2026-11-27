@@ -9,7 +9,7 @@ Sistema de gestão de adoção de animais. Trabalho da disciplina de Linguagem d
 
 O sistema cadastra cachorros, gatos e adotantes. O operador cria uma solicitação de adoção para um animal. O operador aprova ou rejeita a solicitação. Quando ele aprova, o animal passa a ter o status "Adotado".
 
-Nesta primeira parte do trabalho, o sistema guarda os dados somente na memória. Ao fechar o programa, os dados são apagados. A segunda parte do trabalho vai incluir um banco de dados.
+O sistema grava os dados em um banco de dados PostgreSQL. Os cadastros e as solicitações continuam disponíveis depois que o programa fecha.
 
 ## Como executar
 
@@ -143,8 +143,9 @@ O programa mostra estas mensagens quando algo falha na conexão com o banco.
 | Singleton | `Abrigo` | Existe um único abrigo durante a execução. |
 | Factory (fábrica simples) | `AnimalFactory` | Cria `Cachorro` ou `Gato` conforme o tipo pedido. |
 | State | `EstadoSolicitacao` e suas subclasses | Define o que cada estado da solicitação permite. |
+| DAO | `AbrigoDAO`, `AdotanteDAO`, `AnimalDAO`, `SolicitacaoAdocaoDAO` | Isolam o acesso ao PostgreSQL. As classes de modelo não conhecem o SQL. |
 
-A arquitetura é MVC simplificada: `models/` guarda as regras, `views/` guarda as janelas e `controllers/` liga as duas partes. Os motivos de cada escolha estão em [docs/pt-br/decisoes.md](docs/pt-br/decisoes.md).
+A arquitetura é MVC simplificada, com uma camada de acesso ao banco: `models/` guarda as regras, `views/` guarda as janelas, `controllers/` liga as duas partes e `dao/` lê e grava as tabelas. Os motivos de cada escolha estão em [docs/pt-br/decisoes.md](docs/pt-br/decisoes.md).
 
 ## Estrutura de pastas
 
@@ -153,6 +154,12 @@ A arquitetura é MVC simplificada: `models/` guarda as regras, `views/` guarda a
 ├── main.py                  Ponto de entrada
 ├── criteriosAvaliacao.md    Critérios do professor
 ├── docs/                    Documentação e diagramas UML
+├── database/
+│   ├── banco.sql            Criação das tabelas
+│   ├── insercao.sql         Dados de exemplo
+│   ├── conexao.py           Conexão e transações
+│   └── testes.py            Testes de integração
+├── dao/                     Acesso às tabelas (um DAO por tabela)
 ├── src/
 │   ├── models/              Entidades e regras de negócio
 │   ├── views/               Janelas Tkinter
@@ -165,8 +172,10 @@ A arquitetura é MVC simplificada: `models/` guarda as regras, `views/` guarda a
 
 Veja a pasta [docs](docs/README.md). Ela contém os textos em português e em inglês e os diagramas UML.
 
-## Limitações desta etapa
+## Limitações conhecidas
 
-- Os dados não são salvos. Eles somem quando o programa fecha. O banco de dados está previsto para a segunda parte.
 - O sistema confere só a quantidade de dígitos do CPF. Ele não valida os dígitos verificadores.
 - O sistema não valida o telefone.
+- O programa carrega os dados do banco uma vez, na abertura. Se outra pessoa alterar o banco com o programa aberto, a tela não atualiza.
+- O sistema trabalha com um único abrigo, chamado "Patinhas Felizes".
+- O programa não abre se o banco estiver indisponível.
