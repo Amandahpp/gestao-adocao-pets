@@ -1,5 +1,5 @@
 @startuml
-title Arquitetura MVC simplificada
+title Arquitetura MVC simplificada com camada DAO
 
 package "View (src/views)" {
   [MainView]
@@ -18,6 +18,19 @@ package "Model (src/models)" {
   [AnimalFactory]
 }
 
+package "DAO (dao)" {
+  [AbrigoDAO]
+  [AdotanteDAO]
+  [AnimalDAO]
+  [SolicitacaoAdocaoDAO]
+}
+
+package "database" {
+  [conexao]
+}
+
+database "PostgreSQL" as PG
+
 MainView --> Controller : cliques
 Janelas --> Controller : cliques e dados
 Controller ..> MainView : cria
@@ -28,9 +41,23 @@ Controller --> Adotante : cria adotante
 Controller --> Solicitacao : cria e altera
 Janelas ..> Abrigo : lê listas
 
+Controller --> AbrigoDAO : grava e lê
+Controller --> AdotanteDAO : grava e lê
+Controller --> AnimalDAO : grava e lê
+Controller --> SolicitacaoAdocaoDAO : grava e lê
+Controller ..> conexao : abre transação
+
+AnimalDAO ..> AnimalFactory : cria o objeto ao ler
+AbrigoDAO --> conexao
+AdotanteDAO --> conexao
+AnimalDAO --> conexao
+SolicitacaoAdocaoDAO --> conexao
+conexao --> PG : SQL
+
 note bottom of Controller
   Limites desta etapa:
-  o Controller usa messagebox (Tkinter)
+  o Controller usa messagebox (Tkinter),
+  conhece a conexão com o banco
   e as janelas leem listas do Abrigo.
 end note
 @enduml
