@@ -22,7 +22,14 @@ if (Nome preenchido e sexo válido?) then (não)
   stop
 endif
 
-:Abrigo guarda o animal;
+:AnimalDAO grava o animal no banco;
+
+if (O banco aceitou a gravação?) then (não)
+  :Mensagem "Erro no banco de dados";
+  stop
+endif
+
+:Abrigo guarda o animal em memória;
 :Mensagem de sucesso;
 :Fechar janela;
 stop
