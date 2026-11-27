@@ -39,12 +39,15 @@ class Abrigo <<Singleton>> {
   -solicitacoes
   +cadastrar_animal(animal)
   +cadastrar_solicitacao(solicitacao)
+  +restaurar_solicitacao(solicitacao)
+  +remover_solicitacao(solicitacao)
 }
 
 class SolicitacaoAdocao {
   -animal
   -adotante
-  -estado
+  -estado  
+  -id
   +status
   +aprovar()
   +rejeitar()
