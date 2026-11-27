@@ -6,6 +6,9 @@ class Gato(Animal):
         super().__init__(id_animal, nome, idade, sexo)
         self.__pelagem = pelagem
 
+    @property
+    def pelagem(self): return self.__pelagem
+
     def exibir_dados(self):
         return (
             f"Gato: {self.nome} | "
