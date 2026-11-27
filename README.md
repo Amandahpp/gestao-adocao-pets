@@ -13,21 +13,98 @@ Nesta primeira parte do trabalho, o sistema guarda os dados somente na memória.
 
 ## Como executar
 
-Requisito: Python 3.10 ou superior. O Tkinter faz parte da instalação padrão do Python no Windows. No Linux, pode ser necessário instalar o pacote `python3-tk`.
+### Requisitos
+
+- Python 3.10 ou superior. O Tkinter faz parte da instalação padrão do Python no Windows. No Linux, pode ser necessário instalar o pacote `python3-tk`.
+- PostgreSQL 12 ou superior.
+- O pacote Python `psycopg2`.
+
+### Passos
 
 1. Baixe ou clone este repositório.
 2. Abra um terminal na pasta que contém o arquivo `main.py`.
-3. Execute o comando:
+3. Instale o driver do PostgreSQL:
+
+```
+pip install psycopg2-binary
+```
+
+4. Crie o banco de dados e as tabelas:
+
+```
+psql -U postgres -c "CREATE DATABASE patinhas;"
+psql -U postgres -d patinhas -f database/banco.sql
+```
+
+O script `banco.sql` apaga e cria as tabelas de novo. Use só em um banco de desenvolvimento.
+
+5. Opcional: carregue dados de exemplo. Execute este comando antes de abrir o programa pela primeira vez:
+
+```
+psql -U postgres -d patinhas -f database/insercao.sql
+```
+
+6. Execute o programa:
 
 ```
 python main.py
 ```
 
-Para executar os testes automáticos:
+Se o banco estiver indisponível, o programa mostra a mensagem "Banco de dados indisponível" e fecha.
+
+### Configuração da conexão
+
+O programa lê estas variáveis de ambiente. Se uma variável não existir, vale o valor padrão.
+
+| Variável | Valor padrão |
+|---|---|
+| `DB_HOST` | `localhost` |
+| `DB_PORT` | `5432` |
+| `DB_NAME` | `patinhas` |
+| `DB_USER` | `postgres` |
+| `DB_PASSWORD` | vazio |
+
+Exemplo no PowerShell (Windows):
+
+```
+$env:DB_PASSWORD = "sua_senha"
+python main.py
+```
+
+Exemplo no Linux ou no macOS:
+
+```
+export DB_PASSWORD="sua_senha"
+python main.py
+```
+
+### Testes automáticos
+
+Testes dos modelos. Não precisam de banco:
 
 ```
 python -m unittest tests.test_models
 ```
+
+Testes de integração com o banco. Precisam de um PostgreSQL acessível:
+
+```
+python -m unittest database.testes -v
+```
+
+Esses testes criam um schema temporário e o apagam no final. As tabelas reais não são alteradas. Se o banco não estiver acessível, os testes são pulados.
+
+## Problemas comuns
+
+O programa mostra estas mensagens quando algo falha na conexão com o banco.
+
+| Mensagem | Causa provável | O que fazer |
+|---|---|---|
+| O driver psycopg2 não está instalado | Falta o pacote Python. | Execute `pip install psycopg2-binary`. |
+| Não foi possível conectar ao banco (connection refused) | O PostgreSQL está parado ou a porta está errada. | Inicie o serviço do PostgreSQL. Confira `DB_HOST` e `DB_PORT`. |
+| database "patinhas" does not exist | O banco não foi criado. | Crie o banco. Execute `banco.sql`. |
+| password authentication failed | A senha está errada ou ausente. | Defina a variável `DB_PASSWORD`. |
+| relation "animal" does not exist | As tabelas não foram criadas. | Execute `database/banco.sql`. |
 
 ## Como usar
 
