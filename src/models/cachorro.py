@@ -6,6 +6,9 @@ class Cachorro(Animal):
         super().__init__(id_animal, nome, idade, sexo)
         self.__raca = raca
 
+    @property
+    def raca(self): return self.__raca
+
     def exibir_dados(self):
         return (
             f"Cachorro: {self.nome} | "

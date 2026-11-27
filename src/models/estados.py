@@ -19,3 +19,18 @@ class EstadoRejeitada(EstadoSolicitacao):
     nome = "Rejeitada"
     def aprovar(self, solicitacao): raise ValueError("Não é possível aprovar uma solicitação rejeitada.")
     def rejeitar(self, solicitacao): raise ValueError("A solicitação já foi rejeitada.")
+
+
+_ESTADOS = {
+    EstadoPendente.nome: EstadoPendente,
+    EstadoAprovada.nome: EstadoAprovada,
+    EstadoRejeitada.nome: EstadoRejeitada,
+}
+
+
+def estado_por_nome(nome):
+    """Converte o nome gravado no banco ('Pendente', 'Aprovada', 'Rejeitada') no objeto de estado."""
+    try:
+        return _ESTADOS[nome]()
+    except KeyError:
+        raise ValueError(f"Estado de solicitação desconhecido: {nome}") from None

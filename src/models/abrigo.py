@@ -28,6 +28,18 @@ class Abrigo:
             raise ValueError("Já existe uma solicitação pendente para esse animal.")
         self._solicitacoes.append(solicitacao)
 
+    def restaurar_solicitacao(self, solicitacao):
+        """Recoloca uma solicitação lida do banco, sem revalidar as regras de cadastro
+        (ela pode estar Aprovada ou Rejeitada, com o animal já adotado)."""
+        if solicitacao.animal not in self._animais:
+            raise ValueError("Animal não cadastrado no abrigo.")
+        self._solicitacoes.append(solicitacao)
+
+    def remover_solicitacao(self, solicitacao):
+        """Tira a solicitação da memória (usado para desfazer quando o banco falha)."""
+        if solicitacao in self._solicitacoes:
+            self._solicitacoes.remove(solicitacao)
+
     @property
     def nome(self): return self._nome
 
