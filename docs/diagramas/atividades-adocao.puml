@@ -22,6 +22,7 @@ endif
 
 |Sistema|
 :Registrar solicitação\n(estado Pendente);
+:Gravar a solicitação no banco;
 
 |Operador|
 :Abrir "Gerenciar solicitações";
@@ -34,6 +35,9 @@ else (rejeitar)
   |Sistema|
   :Estado muda para Rejeitada;
 endif
+
+|Sistema|
+:Gravar solicitação e animal\nna mesma transação;
 
 |Operador|
 :Ver tabela atualizada;
