@@ -1,0 +1,58 @@
+@startuml
+title Modelo de dados - PostgreSQL
+hide circle
+
+entity Adotante {
+  *cpf : varchar(14)
+  --
+  nome : varchar(100)
+  telefone : varchar(20)
+}
+
+entity Abrigo {
+  *id : integer
+  --
+  nome : varchar(100)
+}
+
+entity Animal {
+  *id : integer
+  --
+  nome : varchar(100)
+  idade : integer
+  sexo : varchar(20)
+  status : varchar(30)
+  tipo : varchar(10)
+  raca : varchar(100)
+  pelagem : varchar(100)
+  abrigo_id : integer <<FK>>
+}
+
+entity SolicitacaoAdocao {
+  *id : integer
+  --
+  animal_id : integer <<FK>>
+  adotante_cpf : varchar(14) <<FK>>
+  estado : varchar(30)
+  status : varchar(30)
+}
+
+Abrigo |o--o{ Animal : abriga
+Animal ||--o{ SolicitacaoAdocao : recebe
+Adotante ||--o{ SolicitacaoAdocao : faz
+
+note right of Animal
+  idade maior ou igual a zero
+  sexo: Macho ou Fêmea
+  status: Disponível ou Adotado
+  tipo: Cachorro ou Gato
+  Cachorro exige raca.
+  Gato exige pelagem.
+end note
+
+note bottom of SolicitacaoAdocao
+  estado: Pendente, Aprovada ou Rejeitada
+  Índice único parcial: cada animal
+  tem no máximo uma solicitação Pendente.
+end note
+@enduml
