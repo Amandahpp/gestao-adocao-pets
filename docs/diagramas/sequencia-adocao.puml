@@ -9,6 +9,9 @@ participant Abrigo
 participant SolicitacaoAdocao as Sol
 participant EstadoPendente as Pend
 participant Animal
+participant SolicitacaoAdocaoDAO as SolDAO
+participant AnimalDAO as AniDAO
+database PostgreSQL as BD
 
 == Registrar a solicitação ==
 Operador -> View : escolhe animal e adotante\nclica em "Enviar solicitação"
@@ -17,7 +20,16 @@ Controller -> Sol : cria SolicitacaoAdocao(animal, adotante)
 Controller -> Abrigo : cadastrar_solicitacao(Sol)
 Abrigo -> Abrigo : confere as regras
 Abrigo --> Controller : registro aceito
+Controller -> SolDAO : inserir(Sol)
+SolDAO -> BD : INSERT em SolicitacaoAdocao
+BD --> SolDAO : id gerado
+SolDAO --> Controller : Sol.id preenchido
 Controller --> View : True (mensagem de sucesso)
+note right of Controller
+  Se o banco falha, o Controller chama
+  Abrigo.remover_solicitacao(Sol)
+  e mostra "Erro no banco de dados".
+end note
 
 == Aprovar a solicitação ==
 Operador -> GView : seleciona a linha\nclica em "Aprovar"
@@ -26,5 +38,16 @@ Controller -> Sol : aprovar()
 Sol -> Pend : aprovar(Sol)
 Pend -> Animal : status = "Adotado"
 Pend -> Sol : estado = EstadoAprovada
+Controller -> SolDAO : atualizar_estado(Sol, conexão)
+SolDAO -> BD : UPDATE em SolicitacaoAdocao
+Controller -> AniDAO : atualizar_status(Animal, conexão)
+AniDAO -> BD : UPDATE em Animal
+Controller -> BD : confirma a transação (commit)
 Controller --> GView : True (mensagem de sucesso)
+note right of Controller
+  As duas gravações usam a mesma transação.
+  Se uma falha, o banco desfaz as duas
+  e o Controller volta o estado e o status
+  em memória ao valor anterior.
+end note
 @enduml
