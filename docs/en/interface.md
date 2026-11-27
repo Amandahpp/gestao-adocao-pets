@@ -30,7 +30,11 @@ The interface uses **Tkinter** and the **ttk** widgets from the Python standard 
 | `Treeview` | Table of animals and requests. |
 | `Scrollbar` | Scroll bar for the tables. |
 | `Button` | Buttons that start an action. |
-| `messagebox` | Warning and success dialogs. |
+| `messagebox` | Warning, success, and database error dialogs. |
+
+## Startup
+
+The `Controller` connects to the database before it shows the menu. If the connection fails, the program shows the dialog **Banco de dados indisponível** (Database unavailable) and closes. During use, a database failure shows the dialog **Erro no banco de dados** (Database error).
 
 ## Events
 
