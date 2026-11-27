@@ -30,7 +30,11 @@ A interface usa **Tkinter** e os componentes **ttk**, da biblioteca padrão do P
 | `Treeview` | Tabela de animais e de solicitações. |
 | `Scrollbar` | Barra de rolagem das tabelas. |
 | `Button` | Botões que executam uma ação. |
-| `messagebox` | Caixas de aviso e de sucesso. |
+| `messagebox` | Caixas de aviso, de sucesso e de erro do banco. |
+
+## Abertura do programa
+
+O `Controller` conecta ao banco antes de mostrar o menu. Se a conexão falha, o programa mostra a caixa **Banco de dados indisponível** e fecha. Durante o uso, uma falha do banco mostra a caixa **Erro no banco de dados**.
 
 ## Eventos
 
